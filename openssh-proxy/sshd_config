@@ -1,0 +1,21 @@
+Port 22
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+PubkeyAuthentication yes
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+
+# UsePAM no
+Banner none
+
+AllowAgentForwarding yes
+AllowStreamLocalForwarding yes
+AllowTcpForwarding yes
+GatewayPorts no
+X11Forwarding yes
+PermitTunnel no
+
+Subsystem sftp /usr/lib/ssh/sftp-server
+
