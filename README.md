@@ -32,7 +32,7 @@ docker run --name pulse-client --detach --device /dev/net/tun --cap-add net_admi
 docker run --name pulse-proxy --detach --network container:pulse-client --volume ~/.ssh/id_rsa.pub:/data/.ssh/authorized_keys --env "USER_ID=$(id -u)" --env "GROUP_ID=$(id -g)" dadevel/openssh-proxy:latest
 ~~~
 
-And adapt your SSH configuration.
+Adapt your SSH configuration.
 
 `~/.ssh/config`:
 ~~~
@@ -50,7 +50,14 @@ Host gitlab.example.com
   ProxyJump pulse-proxy
 ~~~
 
-I recommend [Firefox](https://www.mozilla.org/en-US/firefox/) with [FoxyProxy](https://github.com/foxyproxy/firefox-extension) to use the SOCKS proxy.
+Git LFS can make use of the proxy established by SSH.
+
+~~~ sh
+git config http.proxy socks5://127.0.0.1:6789
+git config https.proxy socks5://127.0.0.1:6789
+~~~
+
+I recommend [Firefox](https://www.mozilla.org/en-US/firefox/) with [FoxyProxy](https://github.com/foxyproxy/firefox-extension) to view websites trough the proxy.
 
 If your experiencing connection problems check docker logs.
 
