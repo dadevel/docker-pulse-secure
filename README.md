@@ -1,19 +1,8 @@
-# docker-pulse-secure
+# docker-pulse-secure [![CI](https://github.com/dadevel/docker-pulse-secure/workflows/CI/badge.svg?branch=master)](https://github.com/dadevel/docker-pulse-secure/actions)
 
 Make a Pulse Secure VPN available as SSH jumphost and SOCKS5 proxy.
 
-**Note:** This is merely a last resort if you can't get [openconncet](https://gitlab.com/openconnect/openconnect) and [openconnect-sso](https://github.com/vlaci/openconnect-sso) working.
-You should definitely try them first.
-
-## Build
-
-Place the Debian/Ubuntu package provided by Pulse Secure in `./pulse-secure-client/pulse.deb`.
-You get a download link by mail after you filled some random data into this [form](https://www.pulsesecure.net/trynow/client-download/).
-
-~~~ sh
-docker build --tag dadevel/openssh-proxy:latest ./openssh-proxy/
-docker build --tag dadevel/pulse-secure-client:latest ./pulse-secure-client/
-~~~
+**Note:** This is merely a last resort if [openconncet](https://gitlab.com/openconnect/openconnect) and [openconnect-sso](https://github.com/vlaci/openconnect-sso) don't work for you.
 
 ## Usage
 
@@ -64,5 +53,15 @@ If your experiencing connection problems check docker logs.
 ~~~ sh
 docker logs -f pulse-client
 docker logs -f pulse-proxy
+~~~
+
+## Build
+
+Pulse Secure mails you a download link to their Debian/Ubuntu package after you filled out [this](https://www.pulsesecure.net/trynow/client-download/) form with some random data.
+Once downloaded move the `*.deb` file to `./pulse-secure-client/pulse.deb`.
+
+~~~ sh
+docker build --tag dadevel/pulse-secure-client:latest ./pulse-secure-client/
+docker build --tag dadevel/openssh-proxy:latest ./openssh-proxy/
 ~~~
 
