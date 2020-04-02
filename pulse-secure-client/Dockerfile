@@ -6,10 +6,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
 # install pulse
-# the required libraries are extracted from UBUNTU_16_17_18_DEPENDENCIES_WITH_VERSION in /usr/local/pulse/PulseClient_x86_64.sh
 # lsb-release is required by the install script of the pulse package
+# iputils-ping is used by pulse-wrapper.sh
+# all other packages are dependencies of pulse secure, libraries were extracted from UBUNTU_16_17_18_DEPENDENCIES_WITH_VERSION in /usr/local/pulse/PulseClient_x86_64.sh
 COPY ./pulse.deb .
-RUN apt-get install --no-install-recommends -y lsb-release ca-certificates iproute2 libc6 libwebkitgtk-1.0-0 libproxy1v5 libproxy1-plugin-gsettings libproxy1-plugin-webkit libdconf1 libgnome-keyring0 dconf-gsettings-backend && \
+RUN apt-get install --no-install-recommends -y lsb-release iputils-ping ca-certificates iproute2 libc6 libwebkitgtk-1.0-0 libproxy1v5 libproxy1-plugin-gsettings libproxy1-plugin-webkit libdconf1 libgnome-keyring0 dconf-gsettings-backend && \
 dpkg -i ./pulse.deb && \
 rm ./pulse.deb && \
 apt-get purge --autoremove -y lsb-release
@@ -19,7 +20,8 @@ RUN rm -f /sbin/ip6tables /sbin/sysctl && \
 ln -s /bin/true /sbin/ip6tables && \
 ln -s /bin/true /sbin/sysctl
 
-COPY ./entrypoint.sh /pulse-wrapper.sh /
+COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR ["/data"]
 VOLUME ["/data"]
 

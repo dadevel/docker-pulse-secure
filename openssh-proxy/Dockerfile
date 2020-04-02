@@ -11,5 +11,6 @@ COPY ./sshd_config /etc/ssh/
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR ["/data"]
 VOLUME ["/data"]
 
