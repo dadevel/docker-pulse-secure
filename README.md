@@ -1,4 +1,4 @@
-# docker-pulse-secure [![CI](https://github.com/dadevel/docker-pulse-secure/workflows/CI/badge.svg?branch=master)](https://github.com/dadevel/docker-pulse-secure/actions)
+# docker-pulse-secure [![CI](https://github.com/dadevel/docker-pulse-secure/workflows/CI/badge.svg?branch=master)](https://github.com/dadevel/docker-pulse-secure/actions) [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/dadevel/pulse-secure-client?color=blue&logo=docker)](https://hub.docker.com/r/dadevel/pulse-secure-client)
 
 Make a Pulse Secure VPN available as SSH jumphost and SOCKS5 proxy.
 
