@@ -16,9 +16,8 @@ rm ./pulse.deb && \
 apt-get purge --autoremove -y lsb-release
 
 # pulse wants to modify firewall rules and kernel parameters in order to disable ipv6, which is not only unnecessary but also not possible for an unprivileged container, so we replace it with a no-op
-RUN rm -f /sbin/ip6tables /sbin/sysctl && \
-ln -s /bin/true /sbin/ip6tables && \
-ln -s /bin/true /sbin/sysctl
+RUN ln -sf /bin/true /sbin/ip6tables && \
+ln -sf /bin/true /sbin/sysctl
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
