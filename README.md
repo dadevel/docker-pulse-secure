@@ -25,7 +25,7 @@ Adapt your SSH configuration.
 
 `~/.ssh/config`:
 ~~~
-Host example-proxy
+Host pulse-proxy
   Hostname 172.31.255.2
   User proxy
   IdentityFile ~/.ssh/id_rsa
