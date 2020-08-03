@@ -1,0 +1,27 @@
+name: CI
+on:
+  # rebuild images every sunday night
+  schedule:
+  - cron: 0 3 * * 0
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+        - pulse-secure-client
+        - openssh-proxy
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Build & Push
+      run: |
+        docker login --username dadevel --password-stdin <<< $DOCKERHUB_TOKEN
+        trap 'docker logout' EXIT
+        docker build --tag dadevel/${{ matrix.image }}:latest ./${{ matrix.image }}
+        docker push dadevel/${{ matrix.image }}:latest
+      env:
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
