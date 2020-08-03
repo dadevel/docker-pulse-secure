@@ -1,37 +1,7 @@
-# socket
-Port 22
-AddressFamily any
-ListenAddress 0.0.0.0
-ListenAddress ::
-
-# algorithms
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-KexAlgorithms sntrup4591761x25519-sha512@tinyssh.org,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
-MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
-HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
-
-# keep-alive
-TCPKeepAlive no
-ClientAliveInterval 15
-ClientAliveCountMax 3
-
 # authentication
-AuthenticationMethods publickey
-ChallengeResponseAuthentication no
-GSSAPIAuthentication no
-HostbasedAuthentication no
-KerberosAuthentication no
-PasswordAuthentication no
-PermitEmptyPasswords no
-PubkeyAuthentication yes
-
-# users
-PermitRootLogin no
 AllowUsers proxy
-
-# login
-LoginGraceTime 1m
-MaxAuthTries 3
+PermitRootLogin no
+PermitEmptyPasswords yes
 
 # greeting
 # UsePAM no
@@ -44,9 +14,13 @@ AllowAgentForwarding yes
 AllowStreamLocalForwarding yes
 StreamLocalBindUnlink yes
 AllowTcpForwarding yes
-GatewayPorts no
+GatewayPorts clientspecified
 X11Forwarding yes
 PermitTunnel no
 
+# misc
+UseDNS no
+PidFile none
+AcceptEnv LANG LC_*
 Subsystem sftp /usr/lib/ssh/sftp-server
 
