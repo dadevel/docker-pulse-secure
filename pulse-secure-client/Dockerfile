@@ -24,6 +24,6 @@ useradd --uid $USER_ID --gid $GROUP_ID --comment pulse --home-dir /data --no-cre
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
-WORKDIR ["/data"]
-VOLUME ["/data"]
+WORKDIR /data
+VOLUME /data
 
