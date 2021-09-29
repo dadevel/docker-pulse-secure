@@ -26,4 +26,3 @@ COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 WORKDIR /data
 VOLUME /data
-
