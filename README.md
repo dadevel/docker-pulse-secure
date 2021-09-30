@@ -1,4 +1,4 @@
-# docker-pulse-secure [![CI](https://github.com/dadevel/docker-pulse-secure/workflows/CI/badge.svg?branch=master)](https://github.com/dadevel/docker-pulse-secure/actions) [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/dadevel/pulse-secure-client?color=blue&logo=docker)](https://hub.docker.com/r/dadevel/pulse-secure-client)
+# docker-pulse-secure
 
 Make a Pulse Secure VPN available as SSH jumphost and SOCKS5 proxy.
 
@@ -8,7 +8,7 @@ Make a Pulse Secure VPN available as SSH jumphost and SOCKS5 proxy.
 
 Create a Pulse Secure connections file.
 
-`~/.config/pulse-secure/connections.txt`:
+`./connections.txt`:
 
 ~~~ json
 {"connName": "Example Inc.", "baseUrl": "https://vpn.example.com", "preferredCert": ""}
@@ -18,8 +18,8 @@ Create a Pulse Secure connections file.
 Start both containers.
 
 ~~~ sh
-docker run --name pulse-client --detach --device /dev/net/tun --cap-add net_admin --cap-add sys_admin --ip 172.31.255.2 --volume ~/.config/pulse-secure/connections.txt:/data/.pulse_secure/pulse/.pulse_Connections.txt --volume /tmp/.X11-unix:/tmp/.X11-unix --env DISPLAY --env "USER_ID=$(id -u)" --env "GROUP_ID=$(id -g)" dadevel/pulse-secure-client:latest
-docker run --name pulse-proxy --detach --network container:pulse-client dadevel/openssh-proxy:latest
+docker run --name pulse-client --detach --device /dev/net/tun --cap-add net_admin --cap-add sys_admin --ip 172.31.255.2 --volume "$PWD"/connections.txt:/data/.pulse_secure/pulse/.pulse_Connections.txt --volume /tmp/.X11-unix:/tmp/.X11-unix --env DISPLAY --env "USER_ID=$(id -u)" --env "GROUP_ID=$(id -g)" ghcr.io/dadevel/pulse-secure-client:latest
+docker run --name pulse-proxy --detach --network container:pulse-client ghcr.io/dadevel/openssh-proxy:latest
 ~~~
 
 Adapt your SSH configuration.
@@ -61,7 +61,6 @@ Pulse Secure mails you a download link to their Debian/Ubuntu package after you 
 Once downloaded move the `*.deb` file to `./pulse-secure-client/pulse.deb`.
 
 ~~~ sh
-docker build -t dadevel/pulse-secure-client ./pulse-secure-client/
-docker build -t dadevel/openssh-proxy ./openssh-proxy/
+docker buildx build --tag ghcr.io/dadevel/pulse-secure-client:latest --tag ghcr.io/dadevel/pulse-secure-client:9.1r4 --label org.opencontainers.image.title=pulse-secure-client --label org.opencontainers.image.author=dadevel --label org.opencontainers.image.source=https://github.com/dadevel/docker-pulse-secure --label org.opencontainers.image.created=$(date +%Y-%m-%dT%H:%M:%SZ) --label org.opencontainers.image.version=9.1r4 --push ./pulse-secure-client/
+docker buildx build --tag ghcr.io/dadevel/openssh-proxy:latest --label org.opencontainers.image.title=openssh-proxy --label org.opencontainers.image.author=dadevel --label org.opencontainers.image.source=https://github.com/dadevel/docker-pulse-secure --label org.opencontainers.image.created=$(date +%Y-%m-%dT%H:%M:%SZ) --push ./openssh-proxy/
 ~~~
-

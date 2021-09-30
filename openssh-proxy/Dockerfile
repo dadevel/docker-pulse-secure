@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM docker.io/library/alpine:latest
 RUN apk add --no-cache openssh-server openssh-sftp-server && \
 ssh-keygen -A && \
 addgroup -g 1000 proxy && \
